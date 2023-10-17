@@ -14,6 +14,7 @@ import {
 import { useEffect, useState } from "react";
 import { useQueryDetalle } from "../../Queries/queryPerro";
 import { LoremIpsum } from "lorem-ipsum";
+import '../../App.css'
   
 export default function Perros() {
   const [perros, setPerros] = useState([]);
@@ -115,21 +116,28 @@ export default function Perros() {
               <CardMedia
                 sx={{
                   height: isCargando? 0:240,
-                  width: isCargando? 0:345
+                  width: 345
                 }}
                 component="img"
                 image={item.url}
                 onLoad={handleImageLoad} 
                 />
-                {isCargando &&
-                <div style={{ display: "flex", justifyContent: "center" }}>
-                  <CircularProgress size={'240px'}/>
+                {isCargando?
+                <>
+                <div style={{ display: "flex", justifyContent: "center", height:'240px'}}>
+                  <CircularProgress size={'200px'}/>
                 </div>
-                }
+                <div class="barra-loop-nombre"/>
+                <div class="barra-loop-desc"/>
+                <div class="barra-loop-desc"/>
+                </>
+                :
                 <>
                   <Typography variant="h5" fontWeight="bold" align="center">{item.name}</Typography>
                   <ListItemText primary={item.descripcion}/>
-
+                </>
+                }
+                  <>
                   <Button
                     variant="outlined"
                     onClick={() => { Aceptar(item); handleImageLoading();}}
@@ -137,7 +145,6 @@ export default function Perros() {
                     style={{ margin: '10px', marginLeft:'45px' }}
                   >Aceptar
                   </Button>
-
                   <Button
                     variant="outlined"
                     onClick={() => { Rechazar(item); handleImageLoading();}}
@@ -152,7 +159,6 @@ export default function Perros() {
           </List>
           </div>
         </Grid>
-  
         <Grid item xs={12} sm={12} md={4} lg={4}>
           <Typography variant="h5" fontWeight="bold" align="center">Aceptados</Typography >
           <div style={{ display: "flex", justifyContent: "center" }}>

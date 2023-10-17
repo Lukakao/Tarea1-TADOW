@@ -2,6 +2,7 @@ import {
   Button,
   Card,
   CardMedia,
+  CircularProgress,
   Divider,
   Grid,
   LinearProgress,
@@ -63,6 +64,19 @@ export default function Perros() {
     }
   });
 
+  const [isCargando, setCargando] = useState(true);
+
+
+
+
+  function handleImageLoad(){
+    setCargando(false);
+  };
+
+  function handleImageLoading() {
+      setCargando(true);
+    };
+
   useEffect(()=>{
     isSuccess && setPerros(dog.message.map((url)=>({url, name: lorem.generateWords(1), descripcion: lorem.generateSentences(3), hidden: true})));
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -95,37 +109,42 @@ export default function Perros() {
           <Typography variant="h5" fontWeight="bold" align="center">Perro Candidato</Typography >
           <div style={{ display: "flex", justifyContent: "center" }}>
           <List>
-            {cargando && <LinearProgress/>}
             {perros.slice(0,1).map((item, index)=>(
               <>
-              
               <Card key={index} sx={{ maxWidth: 345 }}>
-
-                <CardMedia 
-                  sx={{height: 240, width: 345}}
-                  component="img" 
-                  image={item.url}
+              <CardMedia
+                sx={{
+                  height: isCargando? 0:240,
+                  width: isCargando? 0:345
+                }}
+                component="img"
+                image={item.url}
+                onLoad={handleImageLoad} 
                 />
+                {isCargando &&
+                <div style={{ display: "flex", justifyContent: "center" }}>
+                <CircularProgress size={'240px'}/>
+                </div>}
+                <>
+                  <Typography variant="h5" fontWeight="bold" align="center">{item.name}</Typography>
+                  <ListItemText primary={item.descripcion}/>
 
-                <Typography variant="h5" fontWeight="bold" align="center">{item.name}</Typography>
-                <ListItemText primary={item.descripcion}/>
+                  <Button
+                    variant="outlined"
+                    onClick={() => { Aceptar(item); handleImageLoading();}}
+                    style={{ margin: '10px', marginLeft:'45px' }}
+                  >Aceptar
+                  </Button>
 
-                <Button
-                  variant="outlined"
-                  onClick={() => Aceptar(item)}
-                  style={{ margin: '10px', marginLeft:'45px' }}
-                >Aceptar
-                </Button>
-
-                <Button
-                  variant="outlined"
-                  onClick={() => Rechazar(item)}
-                  style={{ margin: '10px' }}
-                >Rechazar
-                </Button>
-
+                  <Button
+                    variant="outlined"
+                    onClick={() => { Rechazar(item); handleImageLoading();}}
+                    style={{ margin: '10px' }}
+                  >Rechazar
+                  </Button>
+                </>
               </Card>
-            </>
+            </> 
             ))}
           </List>
           </div>

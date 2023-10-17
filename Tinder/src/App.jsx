@@ -1,9 +1,14 @@
+import { QueryClient, QueryClientProvider } from 'react-query'
 import Home from './Pages/Home'
+
+const queryClient = new QueryClient();
 
 function App() {
   return (
     <>
-    <Home></Home> 
+    <QueryClientProvider client={queryClient}>
+    <Home></Home>
+    </QueryClientProvider>
     </>
   )
 }

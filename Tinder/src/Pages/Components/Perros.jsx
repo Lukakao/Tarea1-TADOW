@@ -65,16 +65,16 @@ export default function Perros() {
   });
 
   const [isCargando, setCargando] = useState(true);
-
-
-
+  const [isBotonDisabled, setIsBotonDisabled] = useState(true);
 
   function handleImageLoad(){
     setCargando(false);
+    setIsBotonDisabled(false);
   };
 
   function handleImageLoading() {
       setCargando(true);
+      setIsBotonDisabled(true);
     };
 
   useEffect(()=>{
@@ -123,8 +123,9 @@ export default function Perros() {
                 />
                 {isCargando &&
                 <div style={{ display: "flex", justifyContent: "center" }}>
-                <CircularProgress size={'240px'}/>
-                </div>}
+                  <CircularProgress size={'240px'}/>
+                </div>
+                }
                 <>
                   <Typography variant="h5" fontWeight="bold" align="center">{item.name}</Typography>
                   <ListItemText primary={item.descripcion}/>
@@ -132,6 +133,7 @@ export default function Perros() {
                   <Button
                     variant="outlined"
                     onClick={() => { Aceptar(item); handleImageLoading();}}
+                    disabled={isBotonDisabled}
                     style={{ margin: '10px', marginLeft:'45px' }}
                   >Aceptar
                   </Button>
@@ -139,6 +141,7 @@ export default function Perros() {
                   <Button
                     variant="outlined"
                     onClick={() => { Rechazar(item); handleImageLoading();}}
+                    disabled={isBotonDisabled}
                     style={{ margin: '10px' }}
                   >Rechazar
                   </Button>

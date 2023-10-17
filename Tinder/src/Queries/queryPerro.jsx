@@ -13,7 +13,7 @@ export function useQueryDetalle(params) {
 
 export const queryDetalle = async () => {
     try {
-        const response = await axios.get("https://dog.ceo/api/breeds/image/random/3");
+        const response = await axios.get("https://dog.ceo/api/breeds/image/random/30");
         return response.data
     } catch (error) {
         throw new Error(error.message); // Maneja cualquier error que pueda ocurrir durante la solicitud
